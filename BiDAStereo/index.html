@@ -253,7 +253,28 @@
     </div>
   </div>
 </section>
+  
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bulma-carousel@3.0.0/dist/js/bulma-carousel.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var carousels = bulmaCarousel.attach('.carousel', {
+      slidesToScroll: 1,
+      slidesToShow: 1,
+    });
 
+    var carousel = carousels[0]; // Get the first carousel instance
+
+    document.getElementById('prev').addEventListener('click', function() {
+      carousel.previous();
+    });
+
+    document.getElementById('next').addEventListener('click', function() {
+      carousel.next();
+    });
+  });
+</script>
+  
 
 <section class="section">
   <div class="container is-max-desktop">
