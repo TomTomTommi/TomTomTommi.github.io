@@ -230,52 +230,6 @@
   </div>
 </section>
 
-<section class="hero is-light is-small">
-  <div class="hero-body">
-    <div class="container carousel-container">
-      <h2 class="title is-4">Input Videos</h2>
-      <div class="carousel">
-        <div class="item">
-          <video autoplay controls muted loop playsinline>
-            <source src="videos/Visualization_15_angle.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop playsinline>
-            <source src="videos/Visualization_change_angle.mp4" type="video/mp4">
-          </video>
-        </div>
-      </div>
-      <div class="carousel-controls">
-        <button class="button is-primary" id="prev">Previous</button>
-        <button class="button is-primary" id="next">Next</button>
-      </div>
-    </div>
-  </div>
-</section>
-  
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bulma-carousel@3.0.0/dist/js/bulma-carousel.min.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    var carousels = bulmaCarousel.attach('.carousel', {
-      slidesToScroll: 1,
-      slidesToShow: 1,
-    });
-
-    var carousel = carousels[0]; // Get the first carousel instance
-
-    document.getElementById('prev').addEventListener('click', function() {
-      carousel.previous();
-    });
-
-    document.getElementById('next').addEventListener('click', function() {
-      carousel.next();
-    });
-  });
-</script>
-  
-
 <section class="section">
   <div class="container is-max-desktop">
     <!-- Abstract. -->
