@@ -35,61 +35,13 @@
   <link rel="stylesheet" href="./static/css/index.css">
   <link rel="stylesheet" href="./static/css/interactive_figures.css">
   
-  <!-- <link rel="icon" href="./static/images/favicon.svg"> -->
-
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script defer src="./static/js/fontawesome.all.min.js"></script>
   <script src="./static/js/bulma-carousel.min.js"></script>
   <script src="./static/js/bulma-slider.min.js"></script>
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-  <!-- <script src="./static/js/index.js"></script> -->
-
   <script src="https://kit.fontawesome.com/e8d9e5563c.js" crossorigin="anonymous"></script>
-
-<!--   <script>
-    document.addEventListener("DOMContentLoaded", function(event) { 
-        //do work
-      
-      const copyButtonLabel = "Copy BibTex";
-
-      // use a class selector if available
-      let blocks = document.querySelectorAll("pre");
-      console.log(blocks)
-      
-      blocks.forEach((block) => {
-        // only add button if browser supports Clipboard API
-        if (navigator.clipboard) {
-          let button = document.createElement("button");
-      
-          button.innerText = copyButtonLabel;
-          button.classList.add("btn");
-          button.classList.add("btn-primary");
-          button.style.alignContent = "center";
-          button.style.textAlign = "center";
-          block.parentElement.appendChild(button);
-      
-          button.addEventListener("click", async () => {
-            await copyCode(block, button);
-          });
-        }
-      });
-      
-      async function copyCode(block, button) {
-        let code = block.querySelector("code");
-        let text = code.innerText;
-      
-        await navigator.clipboard.writeText(text);
-      
-        // visual feedback that task is completed
-        button.innerText = "BibTex Copied!";
-      
-        setTimeout(() => {
-          button.innerText = copyButtonLabel;
-        }, 1000);
-      }
-  });
-  </script> -->
 
   <style>
 
@@ -145,6 +97,31 @@
     .video-container .video-large {
       width: 90%;
     }
+    
+  .carousel-container {
+      text-align: center;
+    }
+    .carousel {
+      display: flex;
+      overflow: hidden;
+      gap: 1rem;
+      scroll-snap-type: x mandatory;
+    }
+    .carousel .item {
+      flex: 0 0 auto;
+      width: 80%; /* Adjust width as needed */
+      scroll-snap-align: start;
+    }
+    .carousel video {
+      width: 100%;
+      height: auto;
+    }
+    .carousel-controls {
+      display: flex;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+    
   </style>
 </head>
 <body>
@@ -229,6 +206,54 @@
     </div>
   </div>
 </section>
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container carousel-container">
+      <h2 class="title is-4">Input Videos</h2>
+      <div class="carousel">
+        <div class="item">
+          <video autoplay controls muted loop playsinline>
+            <source src="videos/Visualization_15_angle.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="item">
+          <video autoplay controls muted loop playsinline>
+            <source src="videos/Visualization_change_angle.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <div class="carousel-controls">
+        <button class="button is-primary" id="prev">Previous</button>
+        <button class="button is-primary" id="next">Next</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Additional sections here -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bulma-carousel@3.0.0/dist/js/bulma-carousel.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var carousels = bulmaCarousel.attach('.carousel', {
+      slidesToScroll: 1,
+      slidesToShow: 1,
+    });
+
+    var carousel = carousels[0]; // Get the first carousel instance
+
+    document.getElementById('prev').addEventListener('click', function() {
+      carousel.previous();
+    });
+
+    document.getElementById('next').addEventListener('click', function() {
+      carousel.next();
+    });
+  });
+</script>
+
 
 <section class="section">
   <div class="container is-max-desktop">
