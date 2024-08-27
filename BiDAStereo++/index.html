@@ -122,12 +122,42 @@
   </section>
 
 </div>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Video stereo matching is the task of estimating consistent disparities from stereo videos. 
+            There is considerable scope for improvement in both datasets and methods within this field. 
+            Recent learning-based methods often focus on optimizing performance for single stereo pairs, 
+            leading to temporal inconsistencies. Existing video methods typically employ sliding window operation over time, 
+            which can result in low-frequency oscillations corresponding to the window size. 
+            To address these challenges, we propose a bidirectional alignment mechanism for adjacent frames as a fundamental operation. 
+            Building on this, we introduce a novel video processing framework, BiDAStereo, 
+            and a stabilizer network plugin, BiDAStabilizer, which is compatible with general per-frame methods. 
+            Regarding datasets, current synthetic object-based and indoor datasets are commonly used for training and benchmarking, 
+            with a lack of outdoor datasets. 
+            To bridge this gap, we present a realistic synthetic dataset and benchmark focused on natural scenes, 
+            along with a real-world dataset captured by a stereo camera in diverse scenarios for qualitative evaluation.  
+            Extensive experiments on in-domain, out-of-domain, and robustness evaluation demonstrate the contribution of our methods and datasets, showcasing improvements in prediction quality and achieving state-of-the-art results on various commonly used benchmarks.
+          </p>
+
+        </div>
+        <!-- <img src="static/architecture.png"> -->
+      </div>
+    </div>
+  </div>
+
 <section class="section">
   <div class="container is-max-desktop">
     <div class="columns is-centered">
       <div class="column">
         <div class="content">
-          <h2 class="title is-4 has-text-centered">Comparsion with existing methods</h2>
+          <h2 class="title is-3 has-text-centered">Comparsion with existing methods</h2>
           <div class="image-container">
             <img src="img.png" alt="Description of the image" style="max-width: 90%; height: auto;">
           </div>
@@ -337,7 +367,7 @@
             <h2 style="text-align: left;" class="title is-5">Download and Usage</h2>
             <div class="content has-text-justified">
               <p>
-                You can fill this google form to specify your requirements. 
+                You can fill this google form to specify your download requirements. 
                 Your name, institution, purposes, and agreements to License should be included. 
                 We will send you feedback on 3-5 weekdays.
                 If you need more help or information, please contact: sksv.dataset@gmail.com. 
