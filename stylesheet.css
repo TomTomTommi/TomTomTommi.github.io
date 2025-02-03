@@ -98,7 +98,7 @@ h2 {
 
 .papertitle {
   font-family: 'Lato', Verdana, Helvetica, sans-serif;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 700;
 }
 
@@ -110,10 +110,16 @@ h2 {
 }
 
 .one {
-  width: 160px;
-  height: 160px;
-  position: relative;
+  width: 100%;
+  height: auto;
+  max-width: 200px;
+  max-height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
+
 
 .two {
   width: 160px;
@@ -140,3 +146,15 @@ span.highlight {
     display: inline-block;
     border-radius: 10px;
 }
+
+/* table {
+  border: 1px solid red;
+}
+
+td {
+  border: 1px solid blue;
+}
+
+h2 {
+  border: 1px solid green;
+} */
