@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="description"
+          content=".">
+    <meta name="keywords"
+          content="Stereo Any Video">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Stereo Any Video</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+          rel="stylesheet">
+
+    <link rel="stylesheet" href="./static/css/bulma.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="./static/css/twentytwenty.css">
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="stylesheet" href="./static/css/index.css">
+    <link rel="icon" href="./img/logo.png">
+
+    <link rel="stylesheet" href="styles.css">
+    <script src="./static/js/jquery-3.2.1.min.js"></script>
+    <script src="./static/js/jquery.event.move.js"></script>
+    <script src="./static/js/jquery.twentytwenty.js"></script>
+    <script src="./static/js/bulma-carousel.min.js"></script>
+    <script src="./static/js/bulma-slider.min.js"></script>
+    <script src="./static/js/fontawesome.all.min.js"></script>
+</head>
+
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LKCDBW8851"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-LKCDBW8851');
+</script>
+
+
+<body>
+
+<section class="hero teaser">
+    <div class="hero-body">
+        <div class="container is-max-desktop has-text-centered">
+            <div class="columns is-centered">
+                <div class="column has-text-centered">
+                    <h1 class="title is-2 publication-title has-text-centered">
+                        Stereo Any Video: <br> Temporally Consistent Stereo Matching
+                    </h1>
+                    <div class="is-size-4 publication-authors">
+                        <span class="author-block">
+                            <a href="https://wbhu.github.io">Junpeng Jing</a>,
+                        </span>
+                        <span class="author-block">
+                            <a href="https://github.com/Roldbach">Nigel Luo</a>,
+                        </span>
+                        <span class="author-block">
+                            <a href="https://yebulabula.github.io/">Ye Mao</a>,
+                        </span>
+                        <span class="author-block">
+                            <a href="https://www.imperial.ac.uk/people/k.mikolajczyk">Krystian Mikolajczyk</a>
+                        </span>
+                    </div>
+                    <div class="is-size-4 publication-authors">
+                        <span class="author-block">Imperial College London</span>
+                    <div class="column has-text-centered">
+                        <div class="publication-links">
+                            <span class="link-block">
+                                <!-- Paper Link. -->
+                                <a href="https://arxiv.org/abs/"
+                                   class="external-link button is-normal is-rounded is-dark">
+                                    <span class="icon">
+                                        <i class="ai ai-arxiv"></i>
+                                    </span>
+                                    <span>arXiv</span>
+                                </a>
+                                <!-- Code Link. -->
+                                <a href="https://github.com/"
+                                   class="external-link button is-normal is-rounded is-dark">
+                                    <span class="icon">
+                                        <i class="fab fa-github"></i>
+                                    </span>
+                                    <span>Code</span>
+                                </a>
+                                <!-- HF Link. -->
+                                <!-- <a href="https://huggingface.co/spaces/tencent/DepthCrafter" target="_blank"
+                                   rel="noopener noreferrer" class="external-link button is-normal is-rounded is-dark">
+                                    <span class="icon">
+                                        &#129303;
+                                    </span>
+                                    <span>Hugging Face Demo</span>
+                                </a> -->
+                                <!-- Model Link. -->
+                                <!-- <a href="https://huggingface.co/tencent/DepthCrafter" target="_blank"
+                                   rel="noopener noreferrer" class="external-link button is-normal is-rounded is-dark">
+                                    <span class="icon">
+                                       <i class="fas fa-dumbbell"></i>
+                                    </span>
+                                    <span>Model</span>
+                                </a> -->
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rolling Video Comparison</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <style>
+        body {
+            background-color: #f5f5f5;
+        }
+        .hidden { 
+            display: none; 
+        }
+        .video-stack video {
+            width: 100%; 
+            margin-bottom: -0.4rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .video-container video {
+            width: 200%;
+            margin-left: 0.5rem;
+            margin-bottom: -0.4rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            margin-top: 0rem;
+        }
+        .nav-buttons .button {
+            font-size: 1.5rem;
+            font-weight: bold;
+            padding: 0.5rem 0.9rem;
+            border-radius: 4px;
+            background-color: white;
+            color: black;
+            border: 1px solid black;
+        }
+        .nav-buttons .button:hover {
+            background-color: black;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px black;
+        }
+    </style>
+</head>
+<body>
+
+
+<section class="hero teaser is-light is-small">
+    <div class="hero-body">
+        <!-- Navigation Buttons (Top) -->
+
+        <!-- First Set (Page 1) -->
+        <div class="container video-page" id="page1">
+            
+            <div class="columns is-gapless is-vcentered">
+                <div class="column is-3">
+                    <div class="video-stack">
+                        <video muted autoplay loop preload="auto" controls>
+                            <source src="./video/new_video050_left.mp4" type="video/mp4" />
+                        </video>
+                        <video muted autoplay loop preload="auto" controls>
+                            <source src="./video/new_video050_right.mp4" type="video/mp4" />
+                        </video>
+                        <video muted autoplay loop preload="auto" controls>
+                            <source src="./video/new_video050_disparity_norm.mp4" type="video/mp4" />
+                        </video>
+                    </div>
+                </div>
+                <div class="column is-9">
+                    <div class="video-container">
+                        <video muted autoplay loop preload="auto" controls>
+                            <source src="./video/video050_nigel.mp4" type="video/mp4" />
+                        </video>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Second Set (Page 2) -->
+        <div class="container video-page hidden" id="page2">
+            <div class="columns is-gapless is-vcentered">
+                <div class="column is-3">
+                    <div class="video-stack">
+                        <video muted autoplay loop preload="auto" controls>
+                            <source src="./video/new_video048_left.mp4" type="video/mp4" />
+                        </video>
+                        <video muted autoplay loop preload="auto" controls>
+                            <source src="./video/new_video048_right.mp4" type="video/mp4" />
+                        </video>
+                        <video muted autoplay loop preload="auto" controls>
+                            <source src="./video/new_video048_disparity_norm.mp4" type="video/mp4" />
+                        </video>
+                    </div>
+                </div>
+                <div class="column is-9">
+                    <div class="video-container">
+                        <video muted autoplay loop preload="auto" controls>
+                            <source src="./video/video048_nigel.mp4" type="video/mp4" />
+                        </video>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+  <!-- Page 3 -->
+    <div class="container video-page hidden" id="page4">
+        <div class="columns is-centered">
+            <div class="column is-full has-text-centered">
+                <div class="video-container">
+                    <video muted autoplay loop preload="auto" controls>
+                        <source src="./video/merge_1_grid.mp4" type="video/mp4" />
+                    </video>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Page 4 -->
+    <div class="container video-page hidden" id="page3">
+        <div class="columns is-centered">
+            <div class="column is-full has-text-centered">
+                <div class="video-container">
+                    <video muted autoplay loop preload="auto" controls>
+                        <source src="./video/merge_0_grid.mp4" type="video/mp4" />
+                    </video>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+
+    <div class="container has-text-centered nav-buttons">
+        <button class="button is-primary" id="prevBtn">◄</button>
+        <button class="button is-primary" id="nextBtn">►</button>
+    </div>
+</section>
+
+<script>
+    let currentPage = 1;
+    const totalPages = 4;
+
+    function showPage(page) {
+        document.querySelectorAll('.video-page').forEach((el, index) => {
+            el.classList.toggle('hidden', index !== (page - 1));
+        });
+    }
+
+    document.getElementById("nextBtn").addEventListener("click", function() {
+        currentPage = (currentPage % totalPages) + 1;
+        showPage(currentPage);
+    });
+
+    document.getElementById("prevBtn").addEventListener("click", function() {
+        currentPage = (currentPage - 2 + totalPages) % totalPages + 1;
+        showPage(currentPage);
+    });
+
+</script>
+
+
+
+<script>
+    $(window).on('load', function () {
+        bulmaCarousel.attach('#results-carousel-horizontal', {
+            slidesToScroll: 1,
+            slidesToShow: 1,
+            loop: true,
+            autoplay: false,
+        });
+
+        bulmaCarousel.attach('#results-carousel-vertical', {
+            slidesToScroll: 1,
+            slidesToShow: 1,
+            loop: true,
+            autoplay: false,
+        });
+
+    });
+</script>
+
+
+<br><br><br>
+
+<section class="hero teaser">
+    <div class="hero-body">
+        <!-- Method. -->
+        <div class="columns is-centered has-text-centered">
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-three-fifths" style=" margin-top: 30px; margin-bottom: 20px;">
+                    <h2 class="title is-3">Overview</h2>
+                    <div class="content has-text-justified">
+                        <div class="hero-body" style="margin-top: 40px; margin-bottom: -30px;">
+                            <img id="overview" width="70%" src="./img/stereoanyvideo.png"/>
+                        </div>
+                        Overview of the proposed Stereo Any Video. 
+                        Given a stereo video sequence as input, 
+                        the model first extracts features and context information 
+                        using trainable convolutional encoders and a frozen monocular video depth encoder 
+                        (Video Depth Anything). At each iteration, 
+                        an all-to-all-pair correlation computes feature correlations, 
+                        followed by an MLP encoder for compact representation. 
+                        Disparities are iteratively refined using a 3D Gated Recurrent Unit (GRU), 
+                        integrated with cost volume features, and upsampled via a temporal convex upsampling layer. 
+                        This process is repeated within a cascaded pipeline to progressively recover full-resolution disparities.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!--/ Method. -->
+    </div>
+</section>
+
+<!-- <style>
+  /* Force all videos to the same height */
+  #cmp-gt-carousel-horizontal video {
+    height: 300px;
+    width: auto;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Optional vertical spacing for stacked videos on the left column */
+  .video-stack video {
+    margin-bottom: -0.5rem;
+  }
+</style> -->
+
+
+
+
+<section class="hero teaser is-light is-small">
+    <div class="hero-body">
+        <div class="container" style="text-align: center; ">
+            <h2 class="title is-3">Comparison with representative methods on labeled datasets</h2>
+            <div id="cmp-gt-carousel-horizontal" class="carousel results-carousel">
+
+                <video muted autoplay="autoplay" loop="loop" width="80%" preload controls>
+                    <source src="./video/compare_with_gt/shaman_3_grid.mp4" type="video/mp4">
+                </video>
+                <video muted autoplay="autoplay" loop="loop" width="80%" preload controls>
+                    <source src="./video/compare_with_gt/ambush_7_grid.mp4" type="video/mp4">
+                </video>
+
+                <video muted autoplay="autoplay" loop="loop" width="80%" preload controls>
+                    <source src="./video/compare_with_gt/Scene20_grid.mp4" type="video/mp4">
+                </video>
+
+                <video muted autoplay="autoplay" loop="loop" width="80%" preload controls>
+                    <source src="./video/compare_with_gt/01f258-3_obj_source_left_grid.mp4" type="video/mp4">
+                </video>
+
+                <video muted autoplay="autoplay" loop="loop" width="80%" preload controls>
+                    <source src="./video/compare_with_gt/1af03d8d_grid.mp4" type="video/mp4">
+                </video>
+                <video muted autoplay="autoplay" loop="loop" width="80%" preload controls>
+                    <source src="./video/compare_with_gt/1e5c89bf_grid.mp4" type="video/mp4">
+                </video>
+                <video muted autoplay="autoplay" loop="loop" width="80%" preload controls>
+                    <source src="./video/compare_with_gt/1c84cf89_grid.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="hero teaser is-light is-small">
+    <div class="hero-body">
+        <div class="container" style="text-align: center; ">
+            <h2 class="title is-3">Comparison on real world videos</h2>
+            <div id="cmp-gt-carousel-horizontal" class="carousel results-carousel">
+                <video muted autoplay="autoplay" loop="loop" width="80%" preload controls>
+                    <source src="./video/compare_with_gt/PC_video030.mp4_grid.mp4" type="video/mp4">
+                </video><video muted autoplay="autoplay" loop="loop" width="80%" preload controls>
+                    <source src="./video/compare_with_gt/Indoor_norm_video030.mp4_grid.mp4" type="video/mp4">
+                </video>
+                <video muted autoplay="autoplay" loop="loop" width="80%" preload controls>
+                    <source src="./video/compare_with_gt/PC_video031.mp4_grid.mp4" type="video/mp4">
+                </video><video muted autoplay="autoplay" loop="loop" width="80%" preload controls>
+                    <source src="./video/compare_with_gt/Indoor_norm_video031.mp4_grid.mp4" type="video/mp4">
+                </video>
+                <video muted autoplay="autoplay" loop="loop" width="80%" preload controls>
+                    <source src="./video/compare_with_gt/PC_video039.mp4_grid.mp4" type="video/mp4">
+                </video>
+                <video muted autoplay="autoplay" loop="loop" width="80%" preload controls>
+                    <source src="./video/compare_with_gt/Indoor_norm_video039.mp4_grid.mp4" type="video/mp4">
+                </video>
+                <video muted autoplay="autoplay" loop="loop" width="80%" preload controls>
+                    <source src="./video/compare_with_gt/Outdoor_norm_video070_grid.mp4" type="video/mp4">
+                </video>
+                <video muted autoplay="autoplay" loop="loop" width="80%" preload controls>
+                    <source src="./video/compare_with_gt/Outdoor_norm_video058_grid.mp4" type="video/mp4">
+                </video>
+                <video muted autoplay="autoplay" loop="loop" width="80%" preload controls>
+                    <source src="./video/compare_with_gt/Outdoor_norm_video007_grid.mp4" type="video/mp4">
+                </video>
+                <video muted autoplay="autoplay" loop="loop" width="80%" preload controls>
+                    <source src="./video/compare_with_gt/Outdoor_norm_video026_grid.mp4" type="video/mp4">
+                </video>
+                
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="hero teaser is-light is-small">
+    <div class="hero-body">
+        <div class="container" style="text-align: center; ">
+            <h2 class="title is-3">3D Point Tracking</h2>
+            <div id="cmp-gt-carousel-horizontal" class="carousel results-carousel">
+                <video muted autoplay="autoplay" loop="loop" width="70%" preload controls>
+                    <source src="./video/application/point_tracking_result.mp4" type="video/mp4">
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    $(window).on('load', function () {
+        bulmaCarousel.attach('#cmp-gt-carousel-horizontal', {
+            slidesToScroll: 1,
+            slidesToShow: 1,
+            loop: true,
+            autoplay: false,
+        });
+
+    });
+</script>
+
+
+<section class="hero teaser" id="BibTeX">
+    <div class="hero-body">
+        <div class="column is-three-fifths" style=" margin-top: 30px; margin-bottom: 20px;">
+            <h2 class="title is-4">BibTeX</h2>
+            <pre><code>@article{jing2025,
+            author      = {},
+            title       = {},
+            journal     = {arXiv preprint arXiv:},
+            year        = {2025}
+    }</code></pre>
+        </div>
+    </div>
+</section>
+
+
+<footer class="footer">
+    <div class="hero-body">
+        <div class="columns is-two-fifths is-centered">
+            <div class="column is-8">
+                <div class="content">
+                    <p>
+                        Website template credit to <a
+                            href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>, and is licensed under a <a
+                            rel="license"
+                            href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+                        Commons Attribution-ShareAlike 4.0 International License</a>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

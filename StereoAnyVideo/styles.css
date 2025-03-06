@@ -1,0 +1,29 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    text-align: center;
+    padding: 20px;
+}
+
+.video-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr; /* First column takes 1 fraction, second column takes 2 fractions */
+    gap: 20px; /* Adjust the gap between columns as needed */
+}
+
+.video-column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Adjust the gap between videos as needed */
+}
+
+.video-column.video-small video {
+    width: 20%;
+}
+
+.video-column.video-large video {
+    width: 100%;
+}
