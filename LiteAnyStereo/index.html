@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZRBT9DCW3F"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-ZRBT9DCW3F');
+  </script>
+  <!-- Three.js -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.181.1/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.181.1/examples/jsm/"
+    }
+  }
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <script type="module" src="static/js/teaser-point-viewer.js"></script>
+
+
+</head>
+
+<script type="module">
+  import { createPointViewer } from "./static/js/teaser-point-viewer.js";
+  window.teaserViewers["flower"] = createPointViewer("flower_teaser_point_viewer", "static/models/flower/cloud_denoise.glb", 0.1);
+  window.teaserViewers["motorcycle"] = createPointViewer("motorcycle_teaser_point_viewer", "static/models/motorcycle/cloud_denoise.glb", 0.5);
+  window.teaserViewers["bench"] = createPointViewer("bench_teaser_point_viewer", "static/models/bench/cloud_denoise.glb", 1.0);
+  window.teaserViewers["office"] = createPointViewer("office_teaser_point_viewer", "static/models/office/cloud_denoise.glb", 0.5);
+  window.otherViewer = createPointViewer("cloud", "static/models/flower/cloud_denoise.glb", 1.0);
+  window.ourViewer = createPointViewer("cloud_ours", "static/models/flower/cloud_denoise.glb", 1.0);
+</script>
+
+<body>
+<!-- Header -->
+<section class="hero" style="padding-bottom: 0rem;">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title" style="font-size:42px">Lite Any Stereo: <br> Efficient Zero-Shot Stereo Matching</h1>
+          <div class="is-size-4 publication-authors; color: blue;">
+            <span class="author-block">
+              <a href="https://tomtomtommi.github.io/">Junpeng Jing</a></sup>,
+              <a href="https://github.com/Roldbach">Nigel Luo</a></sup>,
+              <a href="https://yebulabula.github.io/">Ye Mao</a></sup>,
+              <a href="https://www.imperial.ac.uk/people/k.mikolajczyk">Krystian Mikolajczyk</a></sup>
+            </span>
+          </div>
+          <br>
+          <div class="is-size-4 publication-authors; color: blue;">
+            <span class="author-block"></sup>Imperial College London</span>
+          </div>
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="margin-bottom: -50px;"></div>
+</section>
+
+
+<!-- Teaser -->
+<section class="section" style="padding-top: 0rem;">
+  <div class="container comparison-box">
+    <!-- Navigation buttons -->
+    <button class="nav-btn left-btn" aria-label="Scroll left">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+    <button class="nav-btn right-btn" aria-label="Scroll right">
+      <i class="fas fa-chevron-right"></i>
+    </button>
+
+    <!-- Scrollable window -->
+    <div class="scroll-window" id="teaser_window">
+      <!-- Flower -->
+      <div class="slide">
+        <div class="left-col">
+          <img src="static/models/flower/img.gif">
+          <img src="static/models/flower/vis.png">
+        </div>
+        <!-- <div class="right-col">
+            <model-viewer
+              style="width: 100%; height: 100%; border: 1px solid black;"
+              src="static/models/flower/cloud_denoise.glb"
+              exposure="0.5"
+              max-camera-orbit="Infinity 180deg 100%"
+              min-camera-orbit="-Infinity -180deg 10%"
+              orientation="0deg 180deg 180deg"
+              camera-orbit="180deg 90deg 60%"
+              camera-controls touch-action="none">
+            </model-viewer>
+        </div> -->
+        <div class="right-col">
+          <div id="flower_teaser_point_viewer" style="width: 100%; height: 100%; border: 1px solid black;"> </div>
+        </div>
+      </div>
+      <!-- Motorcycle -->
+      <div class="slide">
+        <div class="left-col">
+          <img src="static/models/motorcycle/img.gif">
+          <img src="static/models/motorcycle/vis.png">
+        </div>
+        <!-- <div class="right-col">
+            <model-viewer
+              style="width: 100%; height: 100%; border: 1px solid black;"
+              src="static/models/motorcycle/cloud_denoise.glb"
+              exposure="0.5"
+              max-camera-orbit="Infinity 180deg 100%"
+              min-camera-orbit="-Infinity -180deg 10%"
+              orientation="0deg 180deg 180deg"
+              camera-orbit="180deg 90deg 60%"
+              camera-controls touch-action="none">
+            </model-viewer>
+        </div> -->
+        <div class="right-col">
+          <div id="motorcycle_teaser_point_viewer" style="width: 100%; height: 100%; border: 1px solid black;"> </div>
+        </div>
+      </div>
+      <!-- Bench -->
+      <div class="slide">
+        <div class="left-col">
+          <img src="static/models/bench/img.gif">
+          <img src="static/models/bench/vis.png">
+        </div>
+        <!-- <div class="right-col">
+            <model-viewer
+              style="width: 100%; height: 100%; border: 1px solid black;"
+              src="static/models/bench/cloud_denoise.glb"
+              exposure="0.5"
+              max-camera-orbit="Infinity 180deg 100%"
+              min-camera-orbit="-Infinity -180deg 10%"
+              orientation="0deg 180deg 180deg"
+              camera-orbit="180deg 90deg 60%"
+              camera-controls touch-action="none">
+            </model-viewer>
+        </div> -->
+        <div class="right-col">
+          <div id="bench_teaser_point_viewer" style="width: 100%; height: 100%; border: 1px solid black;"> </div>
+        </div>
+      </div>
+      <!-- Office -->
+      <div class="slide">
+        <div class="left-col">
+          <img src="static/models/office/img.gif">
+          <img src="static/models/office/vis.png">
+        </div>
+        <!-- <div class="right-col">
+            <model-viewer
+              style="width: 100%; height: 100%; border: 1px solid black;"
+              src="static/models/office/cloud_denoise.glb"
+              exposure="0.5"
+              max-camera-orbit="Infinity 180deg 100%"
+              min-camera-orbit="-Infinity -180deg 10%"
+              orientation="0deg 180deg 180deg"
+              camera-orbit="180deg 90deg 60%"
+              camera-controls touch-action="none">
+            </model-viewer>
+        </div> -->
+        <div class="right-col">
+          <div id="office_teaser_point_viewer" style="width: 100%; height: 100%; border: 1px solid black;"> </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Abstract -->
+<section class="section">
+  <div class="container is-max-fullhd">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <img src="static/images/fig1.png" width="100%">
+          <p>
+          Recent advances in stereo matching have focused on accuracy, often at the cost of significantly increased model size.
+          Traditionally, the community has regarded efficient models as incapable of zero-shot ability due to their limited capacity.
+          In this paper, we introduce Lite Any Stereo, a stereo depth estimation framework that achieves strong zero-shot generalization while remaining highly efficient.
+          To this end, we design a compact yet expressive backbone to ensure scalability, along with a carefully crafted hybrid cost aggregation module.
+          We further propose a three-stage training strategy on million-scale data to effectively bridge the sim-to-real gap.
+          Together, these components demonstrate that an ultra-light model can deliver strong generalization, ranking 1st across four widely used real-world benchmarks.
+          Remarkably, our model attains accuracy comparable to or exceeding state-of-the-art non-prior-based accurate methods while requiring less than 1% of their computational cost, setting a new standard for efficient stereo matching.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Overview -->   
+<section class="section">
+  <div class="container is-max-fullhd">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Overview</h2>
+        <div class="content has-text-justified">
+          <p>Given an input stereo image pair, features are first extracted using a shared-weight feature extraction module. 
+            A correlation module then constructs cost volume from extracted features, 
+            which is processed by a hybrid 3D-2D cost aggregation module to obtain aggregated cost volume along both disparity and spatial dimensions. 
+            Finally, low-resolution disparity map is estimated and a convex upsampling operation is applied to recover the full-resolution disparity map.
+          </p>
+          <img src="static/images/overview.png" width="100%">
+          <p>
+            Stage 1: The lite model is trained using a standard supervised setup on a mixed of synthetic datasets including 1.8M labeled stereo image pairs. 
+            Stage 2: Self-distillation is employed, where both teacher and student models are initialized from the Stage 1 weights. 
+            The teacher receives clean data, while the student is fed perturbed inputs to encourage learning of domain-invariant representations via feature alignment. 
+            Stage3: The lite model is fine-tuned on unlabeled real-world data using pseudo labels generated by a frozen accurate model.
+          </p>
+          <p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Qualitative Comparison -->   
+<section class="section">
+  <div class="container is-max-fullhd">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3" style="text-align: center;">Qualitative Comparison</h2>
+
+        <!-- Scene buttons -->
+        <div style="display: flex; flex: none; align-items: center; justify-content: center; gap: 10px;">
+          <p class="title is-5" style="margin: 0;">Scene:</p>
+          <span id="Corridor" class="button scene is-info is-rounded" onclick="change_scene('Corridor')">
+            Corridor
+          </span>
+          <span id="Wall" class="button scene is-black is-rounded" onclick="change_scene('Wall')">
+            Wall
+          </span>
+          <span id="Gallery" class="button scene is-black is-rounded" onclick="change_scene('Gallery')">
+            Gallery
+          </span>
+          <span id="Office" class="button scene is-black is-rounded" onclick="change_scene('Office')">
+            Office
+          </span>
+          <span id="Staircase" class="button scene is-black is-rounded" onclick="change_scene('Staircase')">
+            Staircase
+          </span>
+        </div>
+
+        <!-- Method buttons -->
+        <div style="display: flex; flex: none; align-items: center; justify-content: center; gap: 10px; margin-top: 10px;">
+          <p class="title is-5" style="margin: 0;">Method:</p>
+          <span id="LightStereo-M" class="button method is-info is-rounded" onclick="change_method('LightStereo-M')">
+            LightStereo-M
+          </span>
+          <span id="BANet-2D" class="button method is-black is-rounded" onclick="change_method('BANet-2D')">
+            BANet-2D
+          </span>
+          <span id="StereoAnything-L" class="button method is-black is-rounded" onclick="change_method('StereoAnything-L')">
+            StereoAnything-L
+          </span>
+        </div>
+
+        <!-- Image row -->
+        <div style="display: flex; width: 100%; gap: 2px; margin-top: 10px; margin-bottom: -20px; text-align: center;">
+          <figure style="width: calc((100% - 4px)/3); margin: 0;">
+            <img id="left" style="width: 100%;">
+            <figcaption style="margin-top: 6px; font-size: 16px; color: black;">
+              Left-Right RGB
+            </figcaption>
+          </figure>
+
+          <figure style="width: calc((100% - 4px)/3); margin: 0;">
+            <img id="disp" style="width: 100%;">
+            <figcaption id="disp_caption" style="margin-top: 6px; font-size: 16px; color: black;"></figcaption>
+          </figure>
+
+          <figure style="width: calc((100% - 4px)/3); margin: 0;">
+            <img id="disp_ours" style="width: 100%;">
+            <figcaption style="margin-top: 6px; font-size: 16px; color: black;">Disparity (Ours)</figcaption>
+          </figure>
+        </div>
+
+        <br>
+
+        <!-- 3D viewer row -->
+        <div style="display: flex; width: 100%; justify-content: center; gap: 10px; margin-top: 10px; margin-bottom: -20px; text-align: center;">
+          <figure style="width: 50%; margin: 0;">
+            <!-- <model-viewer
+              style="width: 100%; height: 400px; border: 1px solid black;"
+              id="cloud"
+              exposure="0.5"
+              max-camera-orbit="Infinity 180deg 100%"
+              min-camera-orbit="-Infinity -180deg 10%"
+              orientation="0deg 180deg 180deg"
+              camera-orbit="180deg 90deg 60%"
+              camera-controls
+              touch-action="none">
+            </model-viewer> -->
+            <div id="cloud" style="width: 100%; height: 400px; border: 1px solid black;"> </div>
+            <figcaption id="cloud_caption" style="margin-top: 6px; font-size: 16px; color: black;"></figcaption>
+          </figure>
+
+          <figure style="width: 50%; margin: 0;">
+            <!-- <model-viewer
+              style="width: 100%; height: 400px; border: 1px solid black;"
+              id="cloud_ours"
+              exposure="0.5"
+              max-camera-orbit="Infinity 180deg 100%"
+              min-camera-orbit="-Infinity -180deg 10%"
+              orientation="0deg 180deg 180deg"
+              camera-orbit="180deg 90deg 60%"
+              camera-controls
+              touch-action="none">
+            </model-viewer> -->
+            <div id="cloud_ours" style="width: 100%; height: 400px; border: 1px solid black;"> </div>
+            <figcaption style="margin-top: 6px; font-size: 16px; color: black;">Metric Point Cloud (Ours)</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const comparison = {
+      "Corridor":{
+        "left":"static/comparison/corridor/ours/img.gif",
+        "right":"static/comparison/corridor/ours/img.gif",
+        "Ours":
+        {
+          "disp":"static/comparison/corridor/ours/vis.png",
+          'cloud': "static/comparison/corridor/ours/cloud_denoise.glb"
+        },
+        "BANet-2D":
+        {
+          "disp":"static/comparison/corridor/banet2d/vis.png",
+          'cloud': "static/comparison/corridor/banet2d/cloud_denoise.glb"
+        },
+        "LightStereo-M":
+        {
+          "disp":"static/comparison/corridor/lightstereo-m/vis.png",
+          'cloud': "static/comparison/corridor/lightstereo-m/cloud_denoise.glb"
+        },
+        "StereoAnything-L":
+        {
+          "disp":"static/comparison/corridor/stereoanything-l/vis.png",
+          'cloud': "static/comparison/corridor/stereoanything-l/cloud_denoise.glb"
+        },
+      },
+      "Wall":{
+        "left":"static/comparison/wall/ours/img.gif",
+        "right":"static/comparison/wall/ours/img.gif",
+        "Ours":
+        {
+          "disp":"static/comparison/wall/ours/vis.png",
+          'cloud': "static/comparison/wall/ours/cloud_denoise.glb"
+        },
+        "BANet-2D":
+        {
+          "disp":"static/comparison/wall/banet2d/vis.png",
+          'cloud': "static/comparison/wall/banet2d/cloud_denoise.glb"
+        },
+        "LightStereo-M":
+        {
+          "disp":"static/comparison/wall/lightstereo-m/vis.png",
+          'cloud': "static/comparison/wall/lightstereo-m/cloud_denoise.glb"
+        },
+        "StereoAnything-L":
+        {
+          "disp":"static/comparison/wall/stereoanything-l/vis.png",
+          'cloud': "static/comparison/wall/stereoanything-l/cloud_denoise.glb"
+        },
+      },
+      "Gallery":{
+        "left":"static/comparison/gallery/ours/img.gif",
+        "right":"static/comparison/gallery/ours/img.gif",
+        "Ours":
+        {
+          "disp":"static/comparison/gallery/ours/vis.png",
+          'cloud': "static/comparison/gallery/ours/cloud_denoise.glb"
+        },
+        "BANet-2D":
+        {
+          "disp":"static/comparison/gallery/banet2d/vis.png",
+          'cloud': "static/comparison/gallery/banet2d/cloud_denoise.glb"
+        },
+        "LightStereo-M":
+        {
+          "disp":"static/comparison/gallery/lightstereo-m/vis.png",
+          'cloud': "static/comparison/gallery/lightstereo-m/cloud_denoise.glb"
+        },
+        "StereoAnything-L":
+        {
+          "disp":"static/comparison/gallery/stereoanything-l/vis.png",
+          'cloud': "static/comparison/gallery/stereoanything-l/cloud_denoise.glb"
+        },
+      },
+      "Office":{
+        "left":"static/comparison/office/ours/img.gif",
+        "right":"static/comparison/office/ours/img.gif",
+        "Ours":
+        {
+          "disp":"static/comparison/office/ours/vis.png",
+          'cloud': "static/comparison/office/ours/cloud_denoise.glb"
+        },
+        "BANet-2D":
+        {
+          "disp":"static/comparison/office/banet2d/vis.png",
+          'cloud': "static/comparison/office/banet2d/cloud_denoise.glb"
+        },
+        "LightStereo-M":
+        {
+          "disp":"static/comparison/office/lightstereo-m/vis.png",
+          'cloud': "static/comparison/office/lightstereo-m/cloud_denoise.glb"
+        },
+        "StereoAnything-L":
+        {
+          "disp":"static/comparison/office/stereoanything-l/vis.png",
+          'cloud': "static/comparison/office/stereoanything-l/cloud_denoise.glb"
+        },
+      },
+      "Staircase":{
+        "left":"static/comparison/staircase/ours/img.gif",
+        "right":"static/comparison/staircase/ours/img.gif",
+        "Ours":
+        {
+          "disp":"static/comparison/staircase/ours/vis.png",
+          'cloud': "static/comparison/staircase/ours/cloud_denoise.glb"
+        },
+        "BANet-2D":
+        {
+          "disp":"static/comparison/staircase/banet2d/vis.png",
+          'cloud': "static/comparison/staircase/banet2d/cloud_denoise.glb"
+        },
+        "LightStereo-M":
+        {
+          "disp":"static/comparison/staircase/lightstereo-m/vis.png",
+          'cloud': "static/comparison/staircase/lightstereo-m/cloud_denoise.glb"
+        },
+        "StereoAnything-L":
+        {
+          "disp":"static/comparison/staircase/stereoanything-l/vis.png",
+          'cloud': "static/comparison/staircase/stereoanything-l/cloud_denoise.glb"
+        },
+      },
+    }
+
+
+
+    var cur_scene = 'Corridor';
+    var cur_method = 'LightStereo-M'
+
+    window.onload = () => {
+      const left = document.getElementById('left');
+      const disp = document.getElementById('disp');
+      const disp_caption = document.getElementById('disp_caption');
+      const cloud_caption = document.getElementById('cloud_caption');
+
+      // Set default image and mark the default button as active
+      left.src = comparison[cur_scene]['left'];
+
+      disp.src = comparison[cur_scene][cur_method]['disp'];
+      disp_ours.src = comparison[cur_scene]['Ours']['disp'];
+      disp_caption.textContent = `Disparity (${cur_method})`;
+
+      window.otherViewer.loadModel(comparison[cur_scene][cur_method]['cloud'])
+      window.ourViewer.loadModel(comparison[cur_scene]['Ours']['cloud'])
+      cloud_caption.textContent = `Metric Point Cloud (${cur_method})`;
+    };
+    
+    function change_scene(scene) {
+      cur_scene = scene
+      const left = document.getElementById('left');
+      const buttons = document.querySelectorAll('.scene');
+
+      // Update the image source based on the scene
+      left.src = comparison[scene]['left'];
+      disp_ours.src = comparison[scene]['Ours']['disp']
+      window.ourViewer.loadModel(comparison[cur_scene]['Ours']['cloud'])
+
+      // Update active button styling
+      buttons.forEach(button => button.className='button scene is-black is-rounded');
+      document.getElementById(scene).className = 'button scene is-info is-rounded'
+
+      change_method(cur_method)
+    }
+
+    function change_method(method) {
+      cur_method = method
+      const disp = document.getElementById('disp');
+      const disp_caption = document.getElementById('disp_caption');
+      
+      window.otherViewer.loadModel(comparison[cur_scene][cur_method]['cloud'])
+      const cloud_caption = document.getElementById('cloud_caption');
+      const buttons = document.querySelectorAll('.method');
+
+      // Update the image source based on the scene
+      disp.src = comparison[cur_scene][method]['disp']
+      disp_caption.textContent = `Disparity (${method})`;
+      cloud_caption.textContent = `Metric Point Cloud (${method})`;
+
+      // Update active button styling
+      buttons.forEach(button => button.className='button method is-black is-rounded');
+      document.getElementById(method).className = 'button method is-info is-rounded'
+    }
+  </script>
+</section>
+
+
+
+<!-- Quantitative Comparison -->
+<section class="section">
+  <div class="columns is-centered has-text-centered" style="margin-top: 100px;">
+    <div class="column is-four-fifths">
+      <h2 class="title is-3">Quantitative Comparison</h2>
+    </div>
+  </div>
+  <div class="container is-max-fullhd">
+    <div class="comparison-box">
+      <!-- Navigation buttons -->
+      <button class="nav-btn left-btn" aria-label="Scroll left">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <button class="nav-btn right-btn" aria-label="Scroll right">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+
+      <!-- Scrollable window -->
+      <div class="scroll-window">
+        <div class="slide has-text-centered"><img src="static/images/zeroshot_comparison.png" style="width: 75%; height: auto; display: block; margin: 0 auto;"></div>
+        <div class="slide" style="display: flex; justify-content: center; align-items: center;"><img src="static/images/fig2.png" style="width: 60%; height: auto; object-fit: contain;"></div>
+        <div class="slide" style="display: flex; justify-content: center; align-items: center;"><img src="static/images/runtime_comparison.png" style="width: 75%; height: auto; object-fit: contain;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation-->
+  <script>
+  document.querySelectorAll('.comparison-box').forEach(section => {
+    const scrollWindow = section.querySelector('.scroll-window');
+    const leftBtn = section.querySelector('.left-btn');
+    const rightBtn = section.querySelector('.right-btn');
+
+    let currentIndex = 0;
+    const slides = Array.from(scrollWindow.querySelectorAll('.slide'));
+
+    function scrollToIndex(index) {
+      if (index < 0) index = slides.length - 1;
+      if (index >= slides.length) index = 0;
+      currentIndex = index;
+
+      scrollWindow.scrollTo({
+        left: slides[index].offsetLeft,
+        behavior: 'smooth'
+      });
+    }
+
+    leftBtn.addEventListener('click', () => scrollToIndex(currentIndex - 1));
+    rightBtn.addEventListener('click', () => scrollToIndex(currentIndex + 1));
+  });
+  </script>
+</section>
+
+
+<!-- Reference -->   
+<section class="section">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>
+      @article{jing2025,
+        title={Lite Any Stereo: Efficient Zero-Shot Stereo Matching},
+        author={Junpeng Jing and Weixun Luo and Ye Mao and Krystian Mikolajczyk},
+        journal={arXiv},
+        year={2025}
+      }
+    </code></pre>
+  </div>
+</section>
+
+
+<!-- Contact -->   
+<section class="section">
+  <div class="container is-max-desktop content">
+    <h2 class="title">Contact</h2>
+    For questions, please reach out to <a href="https://tomtomtommi.github.io/">Junpeng Jing</a> (j.jing23@imperial.ac.uk).
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container is-max-fullhd">
+    <div class="columns is-centered">
+      <div class="content">
+        <p>The website is modified from <a href="https://github.com/nerfies/nerfies.github.io">here</a> under a <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a></p>
+      </div>
+    </div>
+</footer>
+
+</body>
+</html>
