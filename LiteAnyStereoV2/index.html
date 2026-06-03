@@ -324,6 +324,21 @@
       margin-top: 0.75rem;
     }
 
+    .key-result-shell {
+      margin: 0 auto;
+      max-width: 70%;
+    }
+
+    .key-result-shell .figure-slide img {
+      max-height: 434px;
+    }
+
+    .narrow-figure-block {
+      margin-left: auto;
+      margin-right: auto;
+      max-width: 80%;
+    }
+
     .figure-nav {
       border-radius: 999px;
       height: 2.6rem;
@@ -406,6 +421,11 @@
       .figure-carousel > .figure-nav {
         display: none;
       }
+
+      .narrow-figure-block,
+      .key-result-shell {
+        max-width: 100%;
+      }
     }
   </style>
 </head>
@@ -432,7 +452,7 @@
               </span>
             </div>
             <div class="publication-authors">Imperial College London</div>
-            <div class="venue">CVPR 2026 / arXiv / Coming Soon</div>
+            <div class="venue">arXiv</div>
 
             <div class="publication-links">
               <span class="link-block">
@@ -447,12 +467,6 @@
                   <span>Code</span>
                 </a>
               </span>
-              <span class="link-block">
-                <a href="#" class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon"><i class="fas fa-play"></i></span>
-                  <span>Demo</span>
-                </a>
-              </span>
             </div>
           </div>
         </div>
@@ -463,7 +477,7 @@
   <section class="section" id="key-result">
     <div class="container is-max-widescreen">
       <h2 class="section-title">Key Result</h2>
-      <div class="figure-shell">
+      <div class="figure-shell key-result-shell">
         <figure class="figure-slide">
           <img src="./static/images/fig2.png" alt="Lite Any Stereo V2 key result">
           <p>Lite Any Stereo V2 overview result</p>
@@ -532,7 +546,7 @@
       <h2 class="section-title">Abstract</h2>
       <div class="content has-text-justified">
         <p>
-          Lite Any Stereo V2 improves efficient zero-shot stereo matching with a family of feed-forward models, LAS2-S/M/L, and an iterative high-accuracy model, LAS2-H. LAS2-M improves over LAS/V1 in both speed and reconstruction quality, while LAS2-H provides stronger iterative refinement and remains much faster than heavy accurate stereo models. The model is trained with a three-stage strategy combining synthetic supervision, robust/self-distillation training, and real-world pseudo-label fine-tuning.
+          Recent advances in stereo matching have achieved remarkable accuracy, but often rely on large models, heavy computation, or additional foundation priors, making them difficult to deploy on resource-constrained platforms. In contrast, efficient stereo models offer faster inference but are commonly considered less capable of strong zero-shot generalization. In this paper, we challenge this assumption by introducing <strong>Lite Any Stereo V2 (LAS2)</strong>, an ultra-fast stereo matching model series designed for efficient zero-shot stereo matching. LAS2 is developed from both architecture and training perspectives. Architecturally, we revisit efficient stereo design under practical deployment settings and propose a pure 2D cost aggregation framework, optimized for real inference latency rather than theoretical MACs alone. For training, we develop a three-stage strategy that combines synthetic supervision, self-distillation, and real-world knowledge distillation. To improve the reliability of real-world pseudo supervision, we further introduce pseudo-label filtering and an error-clamping operation, enabling smoother synthetic-to-real transfer. We instantiate LAS2 as a family of models, including feed-forward variants for different efficiency budgets and an iterative variant for higher accuracy. Extensive experiments show that LAS2 achieves state-of-the-art accuracy among efficient stereo methods while maintaining significantly lower latency. Specifically, LAS2-M consistently outperforms the previous feed-forward efficient method LAS across four real-world benchmarks, while running 1.6&times; faster on H200 and 1.9&times; faster on Orin. LAS2-H further achieves stronger overall zero-shot performance than the iterative method Fast-FoundationStereo, with 1.8&times; and 2.7&times; faster inference on H200 and Orin, respectively.
         </p>
       </div>
     </div>
@@ -541,7 +555,7 @@
   <section class="section" id="architecture">
     <div class="container is-max-widescreen">
       <h2 class="section-title">Model Architecture</h2>
-      <article class="overview-block">
+      <article class="overview-block narrow-figure-block">
         <img src="./static/images/architecture.png" alt="Lite Any Stereo V2 architecture">
         <div class="overview-copy">
           <p>
@@ -555,7 +569,7 @@
   <section class="section" id="training-strategy">
     <div class="container is-max-widescreen">
       <h2 class="section-title">Training Strategy</h2>
-      <article class="overview-block">
+      <article class="overview-block narrow-figure-block">
         <img src="./static/images/training_strategy.png" alt="Lite Any Stereo V2 training strategy">
         <div class="overview-copy">
           <p>
@@ -573,7 +587,7 @@
         Summary figures for zero-shot accuracy, runtime, and challenging weather.
       </p>
 
-      <div class="figure-shell">
+      <div class="figure-shell narrow-figure-block">
         <div class="figure-carousel">
           <button class="button figure-nav" type="button" onclick="changeFigure(-1)" aria-label="Previous figure">
             <span class="icon"><i class="fas fa-chevron-left"></i></span>
@@ -647,30 +661,30 @@
     const scenes = {
       feedforward: {
         "Explorer_HD2K_SN28883284_20-18-09": {
-          label: "Kitchen Counter (20-18-09)"
+          label: "Kitchen Counter"
         },
         "Explorer_HD2K_SN28883284_20-44-11": {
-          label: "Gallery Hallway (20-44-11)"
+          label: "Gallery Hallway"
         }
       },
       iterative: {
         "Explorer_HD2K_SN28883284_20-41-07": {
-          label: "Music Stand Close-up (20-41-07)"
+          label: "Music Stand Close-up"
         },
         "Explorer_HD2K_SN28883284_20-42-06": {
-          label: "Stair Landing (20-42-06)"
+          label: "Stair Landing"
         },
         "Explorer_HD2K_SN28883284_20-42-30": {
-          label: "Equipment Staircase (20-42-30)"
+          label: "Equipment Staircase"
         },
         "Explorer_HD2K_SN28883284_20-45-47": {
-          label: "Noticeboard Corridor (20-45-47)"
+          label: "Noticeboard Corridor"
         },
         "Explorer_HD2K_SN28883284_20-47-42": {
-          label: "Gallery Corridor (20-47-42)"
+          label: "Gallery Corridor"
         },
         "Explorer_HD2K_SN28883284_20-51-15": {
-          label: "Stairwell Steps (20-51-15)"
+          label: "Stairwell Steps"
         }
       }
     };
