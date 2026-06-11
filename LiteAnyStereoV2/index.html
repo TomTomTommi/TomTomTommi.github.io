@@ -24,7 +24,6 @@
   <link rel="stylesheet" href="./static/css/index.css">
 
   <script defer src="./static/js/fontawesome.all.min.js"></script>
-  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 
   <style>
     :root {
@@ -484,7 +483,7 @@
       <h2 class="section-title">Zero-shot Result</h2>
       <div class="figure-shell key-result-shell">
         <figure class="figure-slide">
-          <img src="./static/images/fig2.png" alt="Lite Any Stereo V2 zero-shot result">
+          <img src="./static/images/fig2.png" alt="Lite Any Stereo V2 zero-shot result" decoding="async">
           <p>Lite Any Stereo V2 zero-shot result</p>
         </figure>
       </div>
@@ -561,7 +560,7 @@
     <div class="container is-max-widescreen">
       <h2 class="section-title">Model Architecture</h2>
       <article class="overview-block narrow-figure-block">
-        <img src="./static/images/architecture.png" alt="Lite Any Stereo V2 architecture">
+        <img src="./static/images/architecture.png" alt="Lite Any Stereo V2 architecture" loading="lazy" decoding="async">
         <div class="overview-copy">
           <p>
             LAS2 contains an efficient feed-forward family for deployment across speed and quality targets, plus LAS2-H for iterative refinement when higher accuracy is required.
@@ -575,7 +574,7 @@
     <div class="container is-max-widescreen">
       <h2 class="section-title">Training Strategy</h2>
       <article class="overview-block narrow-figure-block">
-        <img src="./static/images/training_strategy.png" alt="Lite Any Stereo V2 training strategy">
+        <img src="./static/images/training_strategy.png" alt="Lite Any Stereo V2 training strategy" loading="lazy" decoding="async">
         <div class="overview-copy">
           <p>
             The training recipe combines synthetic supervised training, a robust/self-distillation stage, and real-world pseudo-label fine-tuning for stronger zero-shot transfer.
@@ -601,15 +600,15 @@
           <div class="figure-window">
             <div class="figure-track" id="figure-track">
               <figure class="figure-slide">
-                <img src="./static/images/zeroshot_comparison.png" alt="Zero-shot comparison">
+                <img src="./static/images/zeroshot_comparison.png" alt="Zero-shot comparison" loading="lazy" decoding="async">
                 <p>Zero-shot Comparison</p>
               </figure>
               <figure class="figure-slide">
-                <img src="./static/images/runtime_comparison.png" alt="Runtime comparison">
+                <img src="./static/images/runtime_comparison.png" alt="Runtime comparison" loading="lazy" decoding="async">
                 <p>Runtime Comparison</p>
               </figure>
               <figure class="figure-slide">
-                <img src="./static/images/weather_comparison.png" alt="Weather comparison">
+                <img src="./static/images/weather_comparison.png" alt="Weather comparison" loading="lazy" decoding="async">
                 <p>Weather Comparison</p>
               </figure>
             </div>
@@ -863,12 +862,9 @@
     window.changeFigure = changeFigure;
 
     document.addEventListener("DOMContentLoaded", function () {
-      const initialMode = comparisonModes[currentMode];
-      const initialPathA = initialMode.baseA + "/" + currentScene + "/cloud_denoise.glb";
-      const initialPathB = initialMode.baseB + "/" + currentScene + "/cloud_denoise.glb";
       pointViewers = {
-        a: createPointViewer("cloud-a-viewer", initialPathA, 0.5),
-        b: createPointViewer("cloud-b-viewer", initialPathB, 0.5)
+        a: createPointViewer("cloud-a-viewer", null, 0.5),
+        b: createPointViewer("cloud-b-viewer", null, 0.5)
       };
       updateComparison();
     });

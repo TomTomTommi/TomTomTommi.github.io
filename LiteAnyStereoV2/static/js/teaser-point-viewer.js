@@ -38,8 +38,44 @@ export function createPointViewer(containerId, initialModelPath, initialPosition
     controls.target.set(0, 0, 0);
     controls.update();
 
+    let renderQueued = false;
+
+    function render() {
+        renderQueued = false;
+        renderer.render(scene, camera);
+    }
+
+    function requestRender() {
+        if (renderQueued) return;
+        renderQueued = true;
+        requestAnimationFrame(render);
+    }
+
+    controls.addEventListener("change", requestRender);
+
     const loader = new GLTFLoader();
     let currentCloud = null;
+
+    function disposeObject(object) {
+        object.traverse((child) => {
+            if (child.geometry) {
+                child.geometry.dispose();
+            }
+
+            if (child.material) {
+                const materials = Array.isArray(child.material) ? child.material : [child.material];
+                materials.forEach((material) => {
+                    Object.keys(material).forEach((key) => {
+                        const value = material[key];
+                        if (value && value.isTexture) {
+                            value.dispose();
+                        }
+                    });
+                    material.dispose();
+                });
+            }
+        });
+    }
 
     function loadModel(modelPath, onError) {
         if (!modelPath) {
@@ -51,6 +87,7 @@ export function createPointViewer(containerId, initialModelPath, initialPosition
 
             if (currentCloud) {
                 scene.remove(currentCloud);
+                disposeObject(currentCloud);
                 currentCloud = null;
             }
 
@@ -85,6 +122,8 @@ export function createPointViewer(containerId, initialModelPath, initialPosition
                 camera.updateProjectionMatrix();
                 controls.update();
             }
+
+            requestRender();
         }, undefined, () => {
             if (onError) onError();
         });
@@ -98,13 +137,10 @@ export function createPointViewer(containerId, initialModelPath, initialPosition
         camera.aspect = w / h;
         camera.updateProjectionMatrix();
         renderer.setSize(w, h);
+        requestRender();
     });
 
-    function animate() {
-        requestAnimationFrame(animate);
-        renderer.render(scene, camera);
-    }
-    animate();
+    requestRender();
 
     return { loadModel };
 }
