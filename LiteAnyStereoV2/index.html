@@ -78,6 +78,11 @@
       white-space: nowrap;
     }
 
+    .publication-authors .author-block a,
+    .publication-authors .author-block a:visited {
+      color: var(--accent) !important;
+    }
+
     .venue {
       color: var(--las-orange);
       font-size: 1.45rem;
@@ -326,11 +331,11 @@
 
     .key-result-shell {
       margin: 0 auto;
-      max-width: 70%;
+      max-width: 85%;
     }
 
     .key-result-shell .figure-slide img {
-      max-height: 434px;
+      max-height: 527px;
     }
 
     .narrow-figure-block {
@@ -476,11 +481,11 @@
 
   <section class="section" id="key-result">
     <div class="container is-max-widescreen">
-      <h2 class="section-title">Key Result</h2>
+      <h2 class="section-title">Zero-shot Result</h2>
       <div class="figure-shell key-result-shell">
         <figure class="figure-slide">
-          <img src="./static/images/fig2.png" alt="Lite Any Stereo V2 key result">
-          <p>Lite Any Stereo V2 overview result</p>
+          <img src="./static/images/fig2.png" alt="Lite Any Stereo V2 zero-shot result">
+          <p>Lite Any Stereo V2 zero-shot result</p>
         </figure>
       </div>
     </div>
@@ -496,10 +501,10 @@
       <div class="comparison-shell">
         <div class="control-bar">
           <div class="segmented" aria-label="Comparison mode">
-            <button id="mode-feedforward" class="button is-active" type="button" onclick="changeMode('feedforward')">
+            <button id="mode-feedforward" class="button" type="button" onclick="changeMode('feedforward')">
               Feed-forward
             </button>
-            <button id="mode-iterative" class="button" type="button" onclick="changeMode('iterative')">
+            <button id="mode-iterative" class="button is-active" type="button" onclick="changeMode('iterative')">
               Iterative
             </button>
           </div>
@@ -669,7 +674,7 @@
       },
       iterative: {
         "Explorer_HD2K_SN28883284_20-41-07": {
-          label: "Music Stand Close-up"
+          label: "Gallery Corridor"
         },
         "Explorer_HD2K_SN28883284_20-42-06": {
           label: "Stair Landing"
@@ -681,7 +686,7 @@
           label: "Noticeboard Corridor"
         },
         "Explorer_HD2K_SN28883284_20-47-42": {
-          label: "Gallery Corridor"
+          label: "Music Stand Close-up"
         },
         "Explorer_HD2K_SN28883284_20-51-15": {
           label: "Stairwell Steps"
@@ -706,7 +711,7 @@
       }
     };
 
-    let currentMode = "feedforward";
+    let currentMode = "iterative";
     const currentSceneByMode = {
       feedforward: Object.keys(scenes.feedforward)[0],
       iterative: Object.keys(scenes.iterative)[0]
@@ -846,9 +851,10 @@
     }
 
     function changeFigure(direction) {
-      const slides = document.querySelectorAll(".figure-slide").length;
+      const track = document.getElementById("figure-track");
+      const slides = track.querySelectorAll(".figure-slide").length;
       currentFigure = (currentFigure + direction + slides) % slides;
-      document.getElementById("figure-track").style.transform = "translateX(-" + (currentFigure * 100) + "%)";
+      track.style.transform = "translateX(-" + (currentFigure * 100) + "%)";
     }
 
     window.changeMode = changeMode;
