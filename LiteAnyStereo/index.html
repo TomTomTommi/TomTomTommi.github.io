@@ -36,24 +36,67 @@
         href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="./static/css/index.css">
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script defer src="./static/js/fontawesome.all.min.js"></script>
-  <script src="./static/js/bulma-carousel.min.js"></script>
-  <script src="./static/js/bulma-slider.min.js"></script>
   <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-  <script type="module" src="static/js/teaser-point-viewer.js"></script>
 
 
 </head>
 
 <script type="module">
   import { createPointViewer } from "./static/js/teaser-point-viewer.js";
-  window.teaserViewers["flower"] = createPointViewer("flower_teaser_point_viewer", "static/models/flower/cloud_denoise.glb", 0.1);
-  window.teaserViewers["motorcycle"] = createPointViewer("motorcycle_teaser_point_viewer", "static/models/motorcycle/cloud_denoise.glb", 0.5);
-  window.teaserViewers["bench"] = createPointViewer("bench_teaser_point_viewer", "static/models/bench/cloud_denoise.glb", 1.0);
-  window.teaserViewers["office"] = createPointViewer("office_teaser_point_viewer", "static/models/office/cloud_denoise.glb", 0.5);
-  // window.otherViewer = createPointViewer("cloud", "static/models/flower/cloud_denoise.glb", 1.0);
-  // window.ourViewer = createPointViewer("cloud_ours", "static/models/flower/cloud_denoise.glb", 1.0);
+
+  const teaserViewerConfigs = {
+    flower: {
+      containerId: "flower_teaser_point_viewer",
+      modelPath: "static/models/flower/cloud_denoise.glb",
+      initialPosition: 0.1
+    },
+    motorcycle: {
+      containerId: "motorcycle_teaser_point_viewer",
+      modelPath: "static/models/motorcycle/cloud_denoise.glb",
+      initialPosition: 0.5
+    },
+    bench: {
+      containerId: "bench_teaser_point_viewer",
+      modelPath: "static/models/bench/cloud_denoise.glb",
+      initialPosition: 1.0
+    },
+    office: {
+      containerId: "office_teaser_point_viewer",
+      modelPath: "static/models/office/cloud_denoise.glb",
+      initialPosition: 0.5
+    }
+  };
+
+  function loadTeaserViewer(name) {
+    if (window.teaserViewers[name]) return;
+    const config = teaserViewerConfigs[name];
+    window.teaserViewers[name] = createPointViewer(config.containerId, config.modelPath, config.initialPosition);
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const entries = Object.entries(teaserViewerConfigs);
+
+    if (!("IntersectionObserver" in window)) {
+      loadTeaserViewer(entries[0][0]);
+      return;
+    }
+
+    const observer = new IntersectionObserver((items) => {
+      items.forEach((item) => {
+        if (!item.isIntersecting) return;
+        loadTeaserViewer(item.target.dataset.viewerName);
+        observer.unobserve(item.target);
+      });
+    }, { rootMargin: "250px" });
+
+    entries.forEach(([name, config]) => {
+      const element = document.getElementById(config.containerId);
+      if (!element) return;
+      element.dataset.viewerName = name;
+      observer.observe(element);
+    });
+  });
 </script>
 
 <body>
@@ -125,8 +168,8 @@
       <!-- Flower -->
       <div class="slide">
         <div class="left-col">
-          <img src="static/models/flower/img.gif">
-          <img src="static/models/flower/vis.png">
+          <img src="static/models/flower/img.gif" decoding="async">
+          <img src="static/models/flower/vis.png" decoding="async">
         </div>
         <!-- <div class="right-col">
             <model-viewer
@@ -147,8 +190,8 @@
       <!-- Motorcycle -->
       <div class="slide">
         <div class="left-col">
-          <img src="static/models/motorcycle/img.gif">
-          <img src="static/models/motorcycle/vis.png">
+          <img src="static/models/motorcycle/img.gif" loading="lazy" decoding="async">
+          <img src="static/models/motorcycle/vis.png" loading="lazy" decoding="async">
         </div>
         <!-- <div class="right-col">
             <model-viewer
@@ -169,8 +212,8 @@
       <!-- Bench -->
       <div class="slide">
         <div class="left-col">
-          <img src="static/models/bench/img.gif">
-          <img src="static/models/bench/vis.png">
+          <img src="static/models/bench/img.gif" loading="lazy" decoding="async">
+          <img src="static/models/bench/vis.png" loading="lazy" decoding="async">
         </div>
         <!-- <div class="right-col">
             <model-viewer
@@ -191,8 +234,8 @@
       <!-- Office -->
       <div class="slide">
         <div class="left-col">
-          <img src="static/models/office/img.gif">
-          <img src="static/models/office/vis.png">
+          <img src="static/models/office/img.gif" loading="lazy" decoding="async">
+          <img src="static/models/office/vis.png" loading="lazy" decoding="async">
         </div>
         <!-- <div class="right-col">
             <model-viewer
@@ -250,7 +293,7 @@
             which is processed by a hybrid 3D-2D cost aggregation module to obtain aggregated cost volume along both disparity and spatial dimensions. 
             Finally, low-resolution disparity map is estimated and a convex upsampling operation is applied to recover the full-resolution disparity map.
           </p>
-          <img src="static/images/overview.png" width="100%">
+          <img src="static/images/overview.png" width="100%" loading="lazy" decoding="async">
           <p>
             Stage 1: The lite model is trained using a standard supervised setup on a mixed of synthetic datasets including 1.8M labeled stereo image pairs. 
             Stage 2: Self-distillation is employed, where both teacher and student models are initialized from the Stage 1 weights. 
@@ -266,7 +309,7 @@
 
 
 <!-- Qualitative Comparison -->   
-<section class="section">
+<section class="section" id="qualitative-comparison">
   <div class="container is-max-fullhd">
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
@@ -309,19 +352,19 @@
         <!-- Image row -->
         <div style="display: flex; width: 100%; gap: 2px; margin-top: 10px; margin-bottom: -20px; text-align: center;">
           <figure style="width: calc((100% - 4px)/3); margin: 0;">
-            <img id="left" style="width: 100%;">
+            <img id="left" style="width: 100%;" decoding="async">
             <figcaption style="margin-top: 6px; font-size: 16px; color: black;">
               Left-Right RGB
             </figcaption>
           </figure>
 
           <figure style="width: calc((100% - 4px)/3); margin: 0;">
-            <img id="disp" style="width: 100%;">
+            <img id="disp" style="width: 100%;" decoding="async">
             <figcaption id="disp_caption" style="margin-top: 6px; font-size: 16px; color: black;"></figcaption>
           </figure>
 
           <figure style="width: calc((100% - 4px)/3); margin: 0;">
-            <img id="disp_ours" style="width: 100%;">
+            <img id="disp_ours" style="width: 100%;" decoding="async">
             <figcaption style="margin-top: 6px; font-size: 16px; color: black;">Disparity (Ours)</figcaption>
           </figure>
         </div>
@@ -495,7 +538,12 @@
     var cur_scene = 'Corridor';
     var cur_method = 'LightStereo-M'
 
-    window.onload = () => {
+    let comparisonInitialized = false;
+
+    function initComparison() {
+      if (comparisonInitialized) return;
+      comparisonInitialized = true;
+
       const left = document.getElementById('left');
       const disp = document.getElementById('disp');
       const disp_caption = document.getElementById('disp_caption');
@@ -515,7 +563,24 @@
       cloud.src = comparison[cur_scene][cur_method]['cloud']
       cloud_ours.src = comparison[cur_scene]['Ours']['cloud']
       cloud_caption.textContent = `Metric Point Cloud (${cur_method})`;
-    };
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const section = document.getElementById('qualitative-comparison');
+
+      if (!section || !('IntersectionObserver' in window)) {
+        initComparison();
+        return;
+      }
+
+      const observer = new IntersectionObserver((entries) => {
+        if (!entries.some(entry => entry.isIntersecting)) return;
+        initComparison();
+        observer.disconnect();
+      }, { rootMargin: '500px' });
+
+      observer.observe(section);
+    });
     
     function change_scene(scene) {
       cur_scene = scene
@@ -580,8 +645,8 @@
 
       <!-- Scrollable window -->
       <div class="scroll-window">
-        <div class="slide has-text-centered"><img src="static/images/zeroshot_comparison.png" style="width: 75%; height: auto; display: block; margin: 0 auto;"></div>
-        <div class="slide" style="display: flex; justify-content: center; align-items: center;"><img src="static/images/fig2.png" style="width: 60%; height: auto; object-fit: contain;"></div>
+        <div class="slide has-text-centered"><img src="static/images/zeroshot_comparison.png" loading="lazy" decoding="async" style="width: 75%; height: auto; display: block; margin: 0 auto;"></div>
+        <div class="slide" style="display: flex; justify-content: center; align-items: center;"><img src="static/images/fig2.png" loading="lazy" decoding="async" style="width: 60%; height: auto; object-fit: contain;"></div>
       </div>
     </div>
   </div>

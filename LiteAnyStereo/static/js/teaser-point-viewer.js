@@ -11,7 +11,7 @@ export function createPointViewer(containerId, initialModelPath, initialPosition
 
     const camera = new THREE.PerspectiveCamera(
         70,
-        container.clientWidth / container.clientHeight,
+        Math.max(container.clientWidth, 1) / Math.max(container.clientHeight, 1),
         0.01,
         1000
     );
@@ -30,6 +30,7 @@ export function createPointViewer(containerId, initialModelPath, initialPosition
     camera.lookAt(0, 0, 0);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(container.clientWidth, container.clientHeight);
     container.appendChild(renderer.domElement);
 
@@ -37,20 +38,95 @@ export function createPointViewer(containerId, initialModelPath, initialPosition
     controls.target.set(0, 0, 0);
     controls.update();
 
+    let renderQueued = false;
+
+    function render() {
+        renderQueued = false;
+        renderer.render(scene, camera);
+    }
+
+    function requestRender() {
+        if (renderQueued) return;
+        renderQueued = true;
+        requestAnimationFrame(render);
+    }
+
+    controls.addEventListener("change", requestRender);
+
     const loader = new GLTFLoader();
     let currentCloud = null;
 
-    function loadModel(modelPath) {
+    function disposeObject(object) {
+        object.traverse((child) => {
+            if (child.geometry) {
+                child.geometry.dispose();
+            }
+
+            if (child.material) {
+                const materials = Array.isArray(child.material) ? child.material : [child.material];
+                materials.forEach((material) => {
+                    Object.keys(material).forEach((key) => {
+                        const value = material[key];
+                        if (value && value.isTexture) {
+                            value.dispose();
+                        }
+                    });
+                    material.dispose();
+                });
+            }
+        });
+    }
+
+    function loadModel(modelPath, onError) {
+        if (!modelPath) {
+            requestRender();
+            return;
+        }
+
         loader.load(modelPath, (gltf) => {
+            let hasPoints = false;
+
+            if (currentCloud) {
+                scene.remove(currentCloud);
+                disposeObject(currentCloud);
+                currentCloud = null;
+            }
+
             gltf.scene.traverse((obj) => {
                 if (obj.isPoints) {
-                    if (currentCloud) scene.remove(currentCloud);
                     obj.material.size = 0.02;
                     obj.material.color = new THREE.Color(0xffffff);
-                    scene.add(obj);
-                    currentCloud = obj;
+                    hasPoints = true;
                 }
             });
+
+            if (!hasPoints) {
+                if (onError) onError();
+                return;
+            }
+
+            scene.add(gltf.scene);
+            currentCloud = gltf.scene;
+
+            const box = new THREE.Box3().setFromObject(gltf.scene);
+            if (!box.isEmpty()) {
+                const sphere = box.getBoundingSphere(new THREE.Sphere());
+                const distance = Math.max(sphere.radius * 2.2, initialPosition);
+                camera.near = Math.max(sphere.radius / 100, 0.001);
+                camera.far = Math.max(sphere.radius * 100, 1000);
+                camera.position.set(
+                    sphere.center.x + distance * Math.cos(elev) * Math.cos(azim),
+                    sphere.center.y + distance * Math.sin(elev),
+                    sphere.center.z + distance * Math.cos(elev) * Math.sin(azim)
+                );
+                controls.target.copy(sphere.center);
+                camera.updateProjectionMatrix();
+                controls.update();
+            }
+
+            requestRender();
+        }, undefined, () => {
+            if (onError) onError();
         });
     }
 
@@ -62,13 +138,10 @@ export function createPointViewer(containerId, initialModelPath, initialPosition
         camera.aspect = w / h;
         camera.updateProjectionMatrix();
         renderer.setSize(w, h);
+        requestRender();
     });
 
-    function animate() {
-        requestAnimationFrame(animate);
-        renderer.render(scene, camera);
-    }
-    animate();
+    requestRender();
 
     return { loadModel };
 }
